@@ -34,6 +34,7 @@ body {
     align-items: end;
     border: 2px solid #D8D8D8;
     font-size: 65px;
+    overflow: hidden;
 }
 
 .buttons-row {
