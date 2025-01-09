@@ -34,10 +34,7 @@ body {
     border: 2px solid #D8D8D8;
 }
 
-#first-row,
-#second-row,
-#third-row,
-#fourth-row {
+.buttons-row {
     display: flex;
     justify-content: space-between;
     margin: 0px 20px;
