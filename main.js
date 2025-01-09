@@ -31,6 +31,8 @@ function operate(a, b, op) {
     }
 }
 
+
+const DP = 6;
 let a = "0";
 let b = "";
 let op = "";
@@ -55,6 +57,12 @@ function reset(...args) {
 
 buttons?.addEventListener("click", (event) => {
     const target = event.target;
+    
+    target.classList.add("button-click-animation");
+    target.addEventListener("animationend", () => {
+        target.classList.remove("button-click-animation");
+    }, {once: true});
+
     // Prevents event delgation of buttons-row
     if (event.target.tagName === "BUTTON") {
         const button = target.textContent;
@@ -80,6 +88,6 @@ buttons?.addEventListener("click", (event) => {
             op === "" ? a += button : b += button
         }
     
-        display.textContent = b === "" ? +a : +b;
+        display.textContent = b === "" ? +((+a).toFixed(DP)) : +((+b).toFixed(DP));
     }
 });

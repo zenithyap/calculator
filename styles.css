@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-size: 20px;
     color: #D8D8D8;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -32,6 +33,7 @@ body {
     justify-content: end;
     align-items: end;
     border: 2px solid #D8D8D8;
+    font-size: 65px;
 }
 
 .buttons-row {
@@ -48,8 +50,19 @@ button {
     margin-bottom: 20px;
     border-radius: 10px;
     background-color: #787878;
+    border: none;
 }
 
 #clear-button {
     font-size: 15px;
+}
+
+@keyframes button-click {
+    50% {
+        transform: scale(0.9);
+    }
+}
+
+.button-click-animation {
+    animation: button-click 0.2s linear;
 }
