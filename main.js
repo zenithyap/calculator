@@ -55,6 +55,10 @@ function reset(...args) {
     }
 }
 
+function stringToNum(str, dp) {
+    return +((+str).toFixed(dp));
+}
+
 function handleDecimalButtonClick() {
     if (b !== "" && !b.includes(".")) {
         b = String(+b) + ".";
@@ -81,6 +85,27 @@ function handleEqualButtonClick() {
     }
 }
 
+function handleClearButtonClick() {
+    reset("a", "b", "op");
+}
+
+function handleDeleteButtonClick() {
+    if (b !== "") {
+        b = b.slice(0, b.length - 1);
+        display.textContent = b.includes(".") ? b : stringToNum(b);
+    } else if (op === "") {
+        a = a.slice(0, a.length - 1);
+        display.textContent = a.includes(".") ? a : stringToNum(a);
+    }
+}
+
+function handleNumberButtonClick(button) {
+    if (op === "=") {
+        reset("a", "op");
+    }
+    op === "" ? a += button : b += button
+}
+
 buttons?.addEventListener("click", (event) => {
     const target = event.target;
 
@@ -101,14 +126,14 @@ buttons?.addEventListener("click", (event) => {
             handleDecimalButtonClick();
             return;
         } else if (button === "CLEAR") {
-            reset("a", "b", "op");
+            handleClearButtonClick();
+        } else if (button === "DEL") {
+            handleDeleteButtonClick();
+            return;
         } else {
-            if (op === "=") {
-                reset("a", "op");
-            }
-            op === "" ? a += button : b += button
+            handleNumberButtonClick(button);
         }
     
-        display.textContent = b === "" ? +((+a).toFixed(DP)) : +((+b).toFixed(DP));
+        display.textContent = b === "" ? stringToNum(a, DP) : stringToNum(b, DP);
     }
 });
