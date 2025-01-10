@@ -32,7 +32,7 @@ function operate(a, b, op) {
 }
 
 
-const DP = 6;
+const DP = 7;
 let a = "0";
 let b = "";
 let op = "";
@@ -55,30 +55,51 @@ function reset(...args) {
     }
 }
 
+function handleDecimalButtonClick() {
+    if (b !== "" && !b.includes(".")) {
+        b = String(+b) + ".";
+        display.textContent = b;
+    } else if (a !== "" && !a.includes(".")) {
+        a = String(+a) + ".";
+        display.textContent = a;
+    }
+}
+
+function handleArithmeticButtonClick(button) {
+    if (a !== "" && b !== "") {
+        a = operate(+a, +b, op);
+        reset("b");
+    }
+    op = button;
+}
+
+function handleEqualButtonClick() {
+    if (b !== "") {
+        a = operate(+a, +b, op);
+        reset("b");
+        op = "=";
+    }
+}
+
 buttons?.addEventListener("click", (event) => {
     const target = event.target;
-    
-    target.classList.add("button-click-animation");
-    target.addEventListener("animationend", () => {
-        target.classList.remove("button-click-animation");
-    }, {once: true});
 
     // Prevents event delgation of buttons-row
     if (event.target.tagName === "BUTTON") {
+        target.classList.add("button-click-animation");
+        target.addEventListener("animationend", () => {
+            target.classList.remove("button-click-animation");
+        }, {once: true});
+
         const button = target.textContent;
     
         if (button === "+" || button === "-" || button === "*" || button === "/") {
-            if (a !== "" && b !== "") {
-                a = operate(+a, +b, op);
-                reset("b");
-            }
-            op = button;
+            handleArithmeticButtonClick(button);
         } else if (button === "=") {
-            if (b !== "") {
-                a = operate(+a, +b, op);
-                reset("b");
-                op = "=";
-            }
+            handleEqualButtonClick();
+        } else if (button === ".") {
+            handleDecimalButtonClick();
+            return;
         } else if (button === "CLEAR") {
             reset("a", "b", "op");
         } else {
