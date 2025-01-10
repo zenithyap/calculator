@@ -54,10 +54,6 @@ button {
     border: none;
 }
 
-#clear-button {
-    font-size: 15px;
-}
-
 @keyframes button-click {
     50% {
         transform: scale(0.9);
