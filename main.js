@@ -31,8 +31,8 @@ function operate(a, b, op) {
     }
 }
 
-
 const DP = 7;
+const NUMS = "0123456789"
 let a = "0";
 let b = "";
 let op = "";
@@ -106,6 +106,26 @@ function handleNumberButtonClick(button) {
     op === "" ? a += button : b += button
 }
 
+function handleButtonClickAndDisplay(button) {
+    if (button === "+" || button === "-" || button === "*" || button === "/") {
+        handleArithmeticButtonClick(button);
+    } else if (button === "=" || button === "Enter") {
+        handleEqualButtonClick();
+    } else if (button === ".") {
+        handleDecimalButtonClick();
+        return;
+    } else if (button === "CLEAR" || button === "Escape") {
+        handleClearButtonClick();
+    } else if (button === "DEL" || button === "Backspace") {
+        handleDeleteButtonClick();
+        return;
+    } else if (NUMS.includes(button)) {
+        handleNumberButtonClick(button);
+    }
+
+    display.textContent = b === "" ? stringToNum(a, DP) : stringToNum(b, DP);
+}
+
 buttons?.addEventListener("click", (event) => {
     const target = event.target;
 
@@ -117,23 +137,11 @@ buttons?.addEventListener("click", (event) => {
         }, {once: true});
 
         const button = target.textContent;
-    
-        if (button === "+" || button === "-" || button === "*" || button === "/") {
-            handleArithmeticButtonClick(button);
-        } else if (button === "=") {
-            handleEqualButtonClick();
-        } else if (button === ".") {
-            handleDecimalButtonClick();
-            return;
-        } else if (button === "CLEAR") {
-            handleClearButtonClick();
-        } else if (button === "DEL") {
-            handleDeleteButtonClick();
-            return;
-        } else {
-            handleNumberButtonClick(button);
-        }
-    
-        display.textContent = b === "" ? stringToNum(a, DP) : stringToNum(b, DP);
+        return handleButtonClickAndDisplay(button);
     }
 });
+
+document.addEventListener("keydown", (event) => {
+    const button = event.key;
+    return handleButtonClickAndDisplay(button);
+})
